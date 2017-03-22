@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Logging;
+using NServiceBus.Persistence.Sql;
 
 class Program
 {
@@ -18,6 +20,14 @@ class Program
         Console.Title = "Samples.EvolveSaga.Version1";
 
         var endpointConfiguration = new EndpointConfiguration("Samples.EvolveSaga");
+        var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
+        persistence.SqlVariant(SqlVariant.MsSqlServer);
+        var connection = @"Data Source=.\SQLEXPRESS;Initial Catalog=SqlPersistenceSample;Integrated Security=True";
+        persistence.ConnectionBuilder(
+            connectionBuilder: () =>
+            {
+                return new SqlConnection(connection);
+            });
 
         SharedConfiguration.Apply(endpointConfiguration);
 

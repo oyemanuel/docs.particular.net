@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Logging;
 using NServiceBus.Persistence.Sql;
-
-#region timeoutSaga1
 
 public class MySaga :
     SqlSaga<MySaga.SagaData>,
@@ -33,11 +32,12 @@ public class MySaga :
         throw new Exception("Expected Timeout in MyTimeoutSagaVersion2. EndpointVersion1 may have been incorrectly started.");
     }
 
+    #region sagadata
     public class SagaData :
         ContainSagaData
     {
         public Guid TheId { get; set; }
+        public Dictionary<int, string> DictionaryProperty { get; set; }
     }
+    #endregion
 }
-
-#endregion

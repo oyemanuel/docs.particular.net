@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Logging;
 using NServiceBus.Persistence.Sql;
-
-#region timeoutSaga2
 
 public class MySaga :
     SqlSaga<MySaga.SagaData>,
@@ -37,7 +36,6 @@ public class MySaga :
         ContainSagaData
     {
         public Guid TheId { get; set; }
+        public Dictionary<int, string> DictionaryProperty { get; set; }
     }
 }
-
-#endregion
